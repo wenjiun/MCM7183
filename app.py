@@ -15,7 +15,7 @@ app.layout = [html.H1('MCM7183 Exercise 3'),
               html.Img(src=image_path), 
               dcc.Dropdown(['Malaysia', 'Indonesia', 'China'], 'Malaysia', id='country_selected'), 
               dcc.Graph(id="graph_scatter"), 
-              dcc.Slider(1960, 2020, 1, value=2020, id='year_selected'),
+              dcc.Slider(1960, 2020, 5, value=2020, id='year_selected'),
               dcc.Graph(id="graph_pie")]
 
 @callback(
