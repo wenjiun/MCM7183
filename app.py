@@ -8,9 +8,6 @@ app.title = "MCM7183 Exercise 3"
 server = app.server
 
 df = pd.read_csv("https://raw.githubusercontent.com/wenjiun/MCM7183Exercise3/main/assets/gdp_1960_2020.csv")
-subset_Malaysia = df[df['country'].isin(["Malaysia"])]
-fig = px.scatter(subset_Malaysia, x="year", y="gdp")
-
 
 subset_2020 = df[df['year'].isin([2020])]
 subset_2020_Asia = subset_2020[subset_2020['state'].isin(["Asia"])]
@@ -26,8 +23,17 @@ fig2 = px.pie(pie_df,values="GDP",names="Continent")
 image_path = 'assets/logo-mmu.png'
 
 app.layout = [html.H1('MCM7183 Exercise 3'), html.Img(src=image_path), 
-              dcc.Dropdown(['2020', '2010', '2000'], 'NYC', id='year_selected'),
-              dcc.Graph(figure=fig), dcc.Graph(figure=fig2)]
+              dcc.Dropdown(['Malaysia', 'Indonesia', 'China'], 'Malaysia', id='country_selected'),
+              dcc.Graph(id="figure_gdp"), dcc.Graph(figure=fig2)]
+
+@callback(
+    Output('figure_gdp', 'figure'),
+    Input('country_selected', 'value')
+)
+def update_figure(value):
+    subset_Country = df[df['country'].isin([value])]
+    fig = px.scatter(subset_Country, x="year", y="gdp")
+    return fig
 
 if __name__ == '__main__':
     app.run(debug=True)
